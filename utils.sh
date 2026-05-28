@@ -1,10 +1,11 @@
 #!/bin/bash
-
+# ===================== 颜色定义（全局统一） =====================
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
-NC='\033[0m'
+NC='\033[0m' # 重置颜色
 
+# ===================== 日志输出函数 =====================
 log_info() {
     echo -e "${GREEN}[INFO] $(date '+%Y-%m-%d %H:%M:%S') $* ${NC}"
 }
@@ -17,6 +18,12 @@ log_error() {
     echo -e "${RED}[ERROR] $(date '+%Y-%m-%d %H:%M:%S') $* ${NC}"
 }
 
+# 新增：缺失的成功日志函数（核心修复）
+log_success() {
+    echo -e "${GREEN}[SUCCESS] $(date '+%Y-%m-%d %H:%M:%S') $* ${NC}"
+}
+
+# ===================== 状态输出函数 =====================
 ok() {
     echo -e "${GREEN}[OK] $*${NC}"
 }
@@ -29,9 +36,10 @@ fail() {
     echo -e "${RED}[FAIL] $*${NC}"
 }
 
+# ===================== 系统检查函数 =====================
 check_root() {
     if [ "$(id -u)" -ne 0 ]; then
-        log_warn "当前非 root 权限，部分信息无法读取"
+        log_warn "当前非 root 权限，部分系统信息无法读取"
     fi
 }
 
@@ -43,13 +51,13 @@ check_service() {
             warn "$1 服务未运行"
         fi
     else
-        warn "$1 服务检查不可用"
+        warn "$1 服务检查不可用（系统未使用systemd）"
     fi
 }
 
 check_disk() {
     if command -v df &>/dev/null; then
-        df -h | grep -vE 'tmpfs|loop' | while read -r line; do
+        df -h | grep -vE 'tmpfs|loop|udev' | while read -r line; do
             use=$(echo "$line" | awk '{print $5}' | tr -d '%')
             if [[ "$use" =~ ^[0-9]+$ ]]; then
                 if [ "$use" -ge 85 ]; then
