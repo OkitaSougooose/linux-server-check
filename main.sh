@@ -166,7 +166,7 @@ show_zombie_info() {
 performance_menu() {
     while true; do
         show_header
-        echo -e "${BLUE}===== 快速查看系统性能（二级菜单） =====${NC}"
+        echo -e "${BLUE}===== 快速查看系统性能 =====${NC}"
         echo ""
         echo -e "  ${WHITE}1.${NC} 系统基础信息"
         echo -e "  ${WHITE}2.${NC} CPU实时状态"
@@ -414,8 +414,8 @@ main_menu() {
         
         echo -e "${WHITE}请选择操作：${NC}"
         echo ""
-        echo -e "  ${GREEN}1.${NC} 一键全量巡检（生成完整报告）"
-        echo -e "  ${BLUE}2.${NC} 快速查看系统性能（二级菜单）"
+        echo -e "  ${GREEN}1.${NC} 一键全量巡检"
+        echo -e "  ${BLUE}2.${NC} 快速查看系统性能"
         echo -e "  ${CYAN}3.${NC} 单独运行数据采集模块"
         echo -e "  ${CYAN}4.${NC} 单独运行日志分析模块"
         echo -e "  ${YELLOW}5.${NC} 查看历史巡检报告"
@@ -433,7 +433,7 @@ main_menu() {
             6) setup_cron ;;
             0)
                 clear
-                echo -e "${GREEN}感谢使用树莓派Linux系统自动巡检系统！${NC}"
+                echo -e "${GREEN}感谢使用Linux系统自动巡检系统！${NC}"
                 exit 0
                 ;;
             *)
